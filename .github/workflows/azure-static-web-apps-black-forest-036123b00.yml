@@ -20,16 +20,13 @@ jobs:
           submodules: true
           lfs: false
       
-      # 添加 Node.js 设置
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # 或者你项目使用的 Node.js 版本
+          node-version: '18'
           
-      # 安装依赖
       - name: Install dependencies
-        run: |
-          npm install
+        run: npm install
           
       - name: Build And Deploy
         id: builddeploy
@@ -40,15 +37,10 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations ######
           app_location: "/" # 项目根目录
-          api_location: "pages/api" # API 路由位置
+          api_location: "" # 对于 Next.js 应用，不需要指定 API 位置
           output_location: ".next" # Next.js 构建输出目录
-          ###### End of Repository/Build Configurations ######
-          skip_app_build: false # 让 Azure 处理构建过程
-          
-          # 添加构建命令
+          skip_app_build: false
           app_build_command: "npm run build"
-          
-      # 可选：添加环境变量
         env:
           NEXT_PUBLIC_GEMINI_API_KEY: ${{ secrets.NEXT_PUBLIC_GEMINI_API_KEY }}
           NEXT_PUBLIC_GEMINI_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_GEMINI_API_BASE_URL }}
